@@ -1,26 +1,80 @@
 {
-  "name": "electron-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "main": "webpack --watch --config ./config/webpack.electron.js --mode development",
-    "start": "nodemon --watch ./dist/main.js --exec electron ./dist/main.js "
+    "start": "nodemon --watch ./app/dist/main.js --exec electron ./app/dist/main.js ",
+    "hot-server": "webpack-dev-server --config ./config/webpack.render.dev.js --mode development",
+    "dev": "concurrently --kill-others  \"npm run main\" \"npm run start\" \"npm run hot-server\"",
+    "build-main": "webpack --config ./config/webpack.electron.js --mode production --progress --profile --colors",
+    "build-renderer": "webpack --config ./config/webpack.render.prod.js --mode production --progress --profile --colors",
+    "build": "rm -rf dist && npm run build-main && npm run build-renderer",
+    "package-win": "npm run build && rm -rf release && electron-builder --win",
+    "package-mac": "npm run build && rm -rf release && electron-builder --mac"
   },
   "author": "",
   "license": "ISC",
+  "build": {
+    "productName": "我的app",
+    "appId": "com.pc.myapp",
+    "artifactName": "${productName}-${version}.${ext}",
+    "copyright": "Copyright©2019",
+    "directories": {
+      "output": "./release"
+    },
+    "files": [
+      "dist"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./resource/icons/app.ico",
+      "uninstallerIcon": "./resource/icons/app.ico",
+      "installerHeaderIcon": "./resource/icons/app.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "我的app"
+    },
+    "mac": {
+      "icon": "./resource/icons/app.png"
+    },
+    "win": {
+      "icon": "./resource/icons/app.ico"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "babel-eslint": "^10.0.3",
+    "@babel/runtime": "^7.6.0",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "babel-loader": "^8.0.6",
+    "concurrently": "^4.1.2",
+    "copy-webpack-plugin": "^5.0.4",
     "electron": "^6.0.7",
+    "electron-builder": "^21.2.0",
+    "electron-dl": "^1.14.0",
+    "electron-is-dev": "^1.1.0",
+    "electron-log": "^3.0.7",
+    "electron-store": "^4.0.0",
+    "eslint": "^6.3.0",
+    "html-webpack-plugin": "^3.2.0",
     "nodemon": "^1.19.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "terser-webpack-plugin": "^2.0.1",
+    "typescript": "^3.6.2",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }

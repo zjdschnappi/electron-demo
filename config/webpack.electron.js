@@ -1,10 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const config = require("./index");
 
 module.exports = {
   entry: [path.resolve(__dirname, "../src/main/main.ts")],
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, config.dist),
     filename: "main.js"
   },
   devtool: false,
@@ -22,7 +24,19 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts", ".json"]
   },
-  plugins: [],
+  plugins: [
+    new CopyWebpackPlugin(
+      [
+        {
+          from: path.resolve(__dirname, "../resource"),
+          to: path.resolve(__dirname, `${config.dist}/resource`)
+        }
+      ],
+      {
+        cache: true
+      }
+    )
+  ],
   target: "electron-main",
   node: {
     __dirname: false,
