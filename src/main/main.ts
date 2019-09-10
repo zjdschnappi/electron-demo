@@ -9,7 +9,10 @@ let win: BrowserWindow | null = null;
 
 let tray: Tray | null = null;
 let trayIcon = nativeImage.createFromPath(
-  path.join(__dirname, `${isDev ? "../resource" : "./resource"}/icons/app.ico`)
+  path.join(
+    __dirname,
+    `${isDev ? "../../resource" : "./resource"}/icons/app.ico`
+  )
 );
 function createTray() {
   tray = new Tray(trayIcon);
