@@ -25,7 +25,9 @@ module.exports = {
     ]
   },
   resolve: {
-    alias: {},
+    alias: {
+      components: path.resolve(__dirname, "../src/renderer/components")
+    },
     extensions: [".jsx", ".js", ".tsx", ".ts"]
   },
   plugins: [
