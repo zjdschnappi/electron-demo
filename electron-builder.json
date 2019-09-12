@@ -1,0 +1,27 @@
+{
+  "productName": "我的app",
+  "appId": "com.pc.myapp",
+  "artifactName": "${productName}-${version}.${ext}",
+  "copyright": "Copyright©2019",
+  "directories": {
+    "output": "./release"
+  },
+  "files": ["dist"],
+  "nsis": {
+    "oneClick": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "installerIcon": "./resource/icons/app.ico",
+    "uninstallerIcon": "./resource/icons/app.ico",
+    "installerHeaderIcon": "./resource/icons/app.ico",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "我的app"
+  },
+  "mac": {
+    "icon": "./resource/icons/app.png"
+  },
+  "win": {
+    "icon": "./resource/icons/app.ico"
+  }
+}
