@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { ipcRenderer, shell } from "electron";
 import Editor from "components/editor";
+import "styles/common.less";
 import { DataStore } from "./dataStore";
 
 // 文件地址缓存

@@ -1,0 +1,85 @@
+@import "~draft-js/dist/Draft.css";
+@imgPath: "/assets";
+.editor-container {
+  // border: 1px solid #ddd;
+  height: 100%;
+  padding: 10px;
+  .editor-header {
+    height: 34px;
+    line-height: 34px;
+  }
+  .DraftEditor-root {
+    height: 100%;
+  }
+  .editor-toolbar {
+    .toolbar-item {
+      display: inline-block;
+    }
+    .toolbar-icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 16px;
+      vertical-align: middle;
+      cursor: pointer;
+      background: url("@{imgPath}/editor/icon-emoji.png") 0 0 no-repeat;
+    }
+    .icon-image {
+      height: 19px;
+      background-image: url("@{imgPath}/editor/icon-image.png");
+    }
+    .icon-file {
+      height: 17px;
+      background-image: url("@{imgPath}/editor/icon-file.png");
+    }
+  }
+  .span-emoji {
+    position: relative;
+
+    letter-spacing: 22px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+    }
+    [data-text] {
+      display: inline-block;
+      line-height: 22px;
+    }
+  }
+}
+.emoji-picker-popover {
+  .ant-popover-inner-content {
+    padding: 0;
+  }
+  .ant-popover-arrow {
+    display: none;
+  }
+  .emoji-picker-container {
+    .emoji-picker-nav {
+      width: 100%;
+      background: #f8f8f8;
+    }
+    .emoji-picker-content {
+      width: 400px;
+      max-height: 260px;
+      height: 260px;
+      overflow: auto;
+    }
+
+    .single-emoji-wrap {
+      display: inline-block;
+      cursor: pointer;
+      padding: 5px;
+      img {
+        width: 22px;
+        height: 22px;
+      }
+      &:hover {
+        background: #f8f8f8;
+      }
+    }
+  }
+}
