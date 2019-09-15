@@ -1,10 +1,14 @@
 import React from "react";
 import EmojiPicker from "./emojiPicker";
+import ImagePicker from "./imagePicker";
+import FilePicker from "./filePicker";
 interface Iprops {
   insertEmoji: (emoji: any) => void;
+  insertImage: (files: FileList) => void;
+  insertFile: (files: FileList) => void;
 }
 export default function Toolbar(props: Iprops) {
-  const { insertEmoji } = props;
+  const { insertEmoji, insertImage, insertFile } = props;
   return (
     <ul className="editor-toolbar">
       <li className="toolbar-item">
@@ -13,10 +17,14 @@ export default function Toolbar(props: Iprops) {
         </EmojiPicker>
       </li>
       <li className="toolbar-item">
-        <i className="toolbar-icon icon-image" />
+        <ImagePicker insertImage={insertImage}>
+          <i className="toolbar-icon icon-image" />
+        </ImagePicker>
       </li>
       <li className="toolbar-item">
-        <i className="toolbar-icon icon-file" />
+        <FilePicker insertFile={insertFile}>
+          <i className="toolbar-icon icon-file" />
+        </FilePicker>
       </li>
     </ul>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Popover } from "antd";
-import EmojiTemplate, { EmojiType } from "./emojiTemplate";
+import EmojiTemplate from "./emojiTemplate";
 
 interface IEmojipickerProps {
   children: React.ReactNode;
