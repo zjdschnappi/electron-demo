@@ -6,12 +6,14 @@ import {
   SelectionState,
   CompositeDecorator,
   AtomicBlockUtils,
-  RichUtils
+  RichUtils,
+  DraftHandleValue
 } from "draft-js";
 import fs from "fs";
 import Toolbar from "./toolbar";
 import decorators from "./decorators";
 import { getBlockRendererFn } from "./blockRender";
+import { editorKeyBindingFn } from "./keyBindingFn";
 const decorator = new CompositeDecorator(decorators);
 const MAX_FILE_SIZE = 2;
 export default class MyEditor extends React.Component {
@@ -33,7 +35,10 @@ export default class MyEditor extends React.Component {
       this.handleChange(nextEditorState);
       return "handled";
     }
-
+    if (command === "log") {
+      console.log("enter键被按下了");
+      return "handled";
+    }
     return "not-handled";
   };
   handleInsertEmoji = (emoji: any) => {
@@ -64,12 +69,12 @@ export default class MyEditor extends React.Component {
       this.focus();
     });
   };
-  insertMedia = (type: string, files: FileList) => {
+  insertMedia = (type: string, files: FileList | Blob[]) => {
     const { editorState } = this.state;
     const hasOverSizeFile = Array.from(files).some(
       item => item.size > MAX_FILE_SIZE * 1024 * 1024
     );
-    const hasDirectory = Array.from(files).some(item =>
+    const hasDirectory = Array.from(files).some((item: any) =>
       fs.statSync(item.path).isDirectory()
     );
     if (hasOverSizeFile) {
@@ -103,6 +108,13 @@ export default class MyEditor extends React.Component {
   handleInsertFile = (files: FileList) => {
     this.insertMedia("FILE", files);
   };
+  handleDroppedFiles = (
+    selection: SelectionState,
+    files: Blob[]
+  ): DraftHandleValue => {
+    this.insertMedia("FILE", files);
+    return "handled";
+  };
   focus = () => {
     this.editorRef.focus();
   };
@@ -123,7 +135,9 @@ export default class MyEditor extends React.Component {
             onChange={this.handleChange}
             ref={ref => (this.editorRef = ref)}
             blockRendererFn={getBlockRendererFn}
+            keyBindingFn={editorKeyBindingFn}
             handleKeyCommand={this.handleKeyCommand}
+            handleDroppedFiles={this.handleDroppedFiles}
           />
         </div>
         <div className="editor-footer"></div>
