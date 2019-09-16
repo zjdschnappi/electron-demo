@@ -3,8 +3,10 @@ import {
   Editor,
   EditorState,
   Modifier,
+  SelectionState,
   CompositeDecorator,
-  AtomicBlockUtils
+  AtomicBlockUtils,
+  RichUtils
 } from "draft-js";
 import fs from "fs";
 import Toolbar from "./toolbar";
@@ -18,8 +20,21 @@ export default class MyEditor extends React.Component {
   };
 
   editorRef: any = null;
-  handleChange = (editorState: any, callback = () => {}) => {
+  handleChange = (editorState: EditorState, callback = () => {}) => {
     this.setState({ editorState }, callback);
+  };
+  handleKeyCommand = (command: string) => {
+    const nextEditorState = RichUtils.handleKeyCommand(
+      this.state.editorState,
+      command
+    );
+
+    if (nextEditorState) {
+      this.handleChange(nextEditorState);
+      return "handled";
+    }
+
+    return "not-handled";
   };
   handleInsertEmoji = (emoji: any) => {
     const { emojiString } = emoji;
@@ -108,6 +123,7 @@ export default class MyEditor extends React.Component {
             onChange={this.handleChange}
             ref={ref => (this.editorRef = ref)}
             blockRendererFn={getBlockRendererFn}
+            handleKeyCommand={this.handleKeyCommand}
           />
         </div>
         <div className="editor-footer"></div>
