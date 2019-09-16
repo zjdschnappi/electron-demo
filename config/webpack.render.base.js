@@ -37,6 +37,17 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(svg|png|jpg|gif)$/,
+        loader: "url-loader",
+        exclude: path.resolve(__dirname, "../src/renderer/assets/emoji"),
+        options: {
+          limit: 8192,
+          name: "assets/[name].[ext]",
+          outputPath: "./",
+          publicPath: config.publicPath
+        }
       }
     ]
   },
